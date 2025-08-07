@@ -1,57 +1,20 @@
-/* eslint-disable react/prop-types */
-import {HiOutlineStar, HiStar} from "react-icons/hi2";
+import React from 'react';
 
-const CurrencyDropdown = ({
-  currencies,
-  currency,
-  setCurrency,
-  favorites,
-  handleFavorite,
-  title = "",
-}) => {
-  const isFavorite = (curr) => favorites.includes(curr);
-
+const CurrencyDropdown = ({ currencies, selectedCurrency, onChange, label }) => {
   return (
-    <div>
-      <label
-        htmlFor={title}
-        className="block text-sm font-medium text-gray-700"
+    <div className="mb-4">
+      <label className="block mb-1">{label}</label>
+      <select
+        value={selectedCurrency}
+        onChange={(e) => onChange(e.target.value)}
+        className="p-2 border rounded w-full"
       >
-        {title}
-      </label>
-
-      <div className="mt-1 relative">
-        <select
-          value={currency}
-          onChange={(e) => setCurrency(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        >
-          {favorites.map((currency) => {
-            return (
-              <option className="bg-gray-200" value={currency} key={currency}>
-                {currency}
-              </option>
-            );
-          })}
-          <hr />
-          {currencies
-            .filter((c) => !favorites.includes(c))
-            .map((currency) => {
-              return (
-                <option value={currency} key={currency}>
-                  {currency}
-                </option>
-              );
-            })}
-        </select>
-
-        <button
-          onClick={() => handleFavorite(currency)}
-          className="absolute inset-y-0 right-0 pr-5 flex items-center text-sm leading-5"
-        >
-          {isFavorite(currency) ? <HiStar /> : <HiOutlineStar />}
-        </button>
-      </div>
+        {currencies.map((currency) => (
+          <option key={currency} value={currency}>
+            {currency}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
